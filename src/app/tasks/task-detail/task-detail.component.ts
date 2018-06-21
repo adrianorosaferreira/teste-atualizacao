@@ -1,3 +1,5 @@
+
+import {switchMap} from 'rxjs/operators';
 // Removido o Input
 // import { Component, Input, OnInit } from '@angular/core';
 import { Component, OnInit, AfterViewInit} from '@angular/core';
@@ -45,9 +47,9 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     public ngOnInit() {
       this.task = new Task(null, null);
       // Sempre quando utilizo um Observable eu preciso usar um subscrib
-      this.route.params
+      this.route.params.pipe(
           // o '+' converte para mumero
-          .switchMap((params: Params) => this.taskService.getById(+params['id']))
+          switchMap((params: Params) => this.taskService.getById(+params['id'])))
           .subscribe(
             task => this.setTask(task),
             error => alert('Ocorreu um erro no Servidor, tente mais tarde.')
